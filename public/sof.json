@@ -1,0 +1,726 @@
+{
+    "id": 1,
+    "name": "SOF",
+    "events": [
+        {
+            "id": "b014d864-26bf-4b92-99cf-97208c6add11",
+            "line": 6,
+            "page": 3,
+            "event_string": "END OF SEA PASSAGE 8-Oct-2022 09:30",
+            "events": [
+                {
+                    "id": "68650bbf-c261-4afe-9c59-20737a6012e9",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T09:30:00",
+                    "start_date": "2022-10-08T09:30:00",
+                    "timestamp": "2022-10-08T09:30:00",
+                    "event_label": "Sea passage - end (EOSP)"
+                }
+            ]
+        },
+        {
+            "id": "3de671d3-d53e-48f7-acd8-ea0f97e91ba9",
+            "line": 7,
+            "page": 3,
+            "event_string": "FREE PARTIQUE GRANTED 8-Oct-2022 09:30",
+            "events": [
+                {
+                    "id": "4bfd2030-ea89-40cc-af8b-a735242ab1c1",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T09:30:00",
+                    "start_date": "2022-10-08T09:30:00",
+                    "timestamp": "2022-10-08T09:30:00",
+                    "event_label": "Free pratique - granted"
+                }
+            ]
+        },
+        {
+            "id": "6fd95e3a-a81e-45d9-98ed-4e534b4ee9e7",
+            "line": 8,
+            "page": 3,
+            "event_string": "N.O.R. TENDERED 8-Oct-2022 09:30",
+            "events": [
+                {
+                    "id": "168dcf64-b80f-4837-84e1-bb7d1f7c4b13",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T09:30:00",
+                    "start_date": "2022-10-08T09:30:00",
+                    "timestamp": "2022-10-08T09:30:00",
+                    "event_label": "NOR tendered"
+                }
+            ]
+        },
+        {
+            "id": "494fb139-b254-4d4c-a51a-23613865a1b0",
+            "line": 9,
+            "page": 3,
+            "event_string": "PILOT ONBOARD 8-Oct-2022 10:36",
+            "events": [
+                {
+                    "id": "dfb7da28-768f-448e-954a-fb074970860f",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T10:36:00",
+                    "start_date": "2022-10-08T10:36:00",
+                    "timestamp": "2022-10-08T10:36:00",
+                    "event_label": "Pilot - embark (POB)"
+                }
+            ]
+        },
+        {
+            "id": "d08dd666-931e-460f-bf32-bbf84b8f8f82",
+            "line": 10,
+            "page": 3,
+            "event_string": "ANCHORED AWQI 8-Oct-2022 11:42",
+            "events": [
+                {
+                    "id": "5ac1f1db-475e-4700-a881-47e774722d2b",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T11:42:00",
+                    "start_date": "2022-10-08T11:42:00",
+                    "timestamp": "2022-10-08T11:42:00",
+                    "event_label": "Drop anchor - complete"
+                }
+            ]
+        },
+        {
+            "id": "d8730b8d-80b7-467a-b413-2bcfd1a9658e",
+            "line": 11,
+            "page": 3,
+            "event_string": "N.O.R. RE-TENDERED 8-Oct-2022 11:42",
+            "events": [
+                {
+                    "id": "4d9cd19a-6839-4ea9-8ce9-6563cc24e410",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T11:42:00",
+                    "start_date": "2022-10-08T11:42:00",
+                    "timestamp": "2022-10-08T11:42:00",
+                    "event_label": "NOR tendered"
+                }
+            ]
+        },
+        {
+            "id": "53ccf508-6691-4164-a697-c9f0c9cbabcd",
+            "line": 12,
+            "page": 3,
+            "event_string": "PILOT OFF 8-Oct-2022 12:00",
+            "events": [
+                {
+                    "id": "62d02daa-7270-4c6e-872d-ddd5f597115f",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T12:00:00",
+                    "start_date": "2022-10-08T12:00:00",
+                    "timestamp": "2022-10-08T12:00:00",
+                    "event_label": "Pilot - embark (POB)"
+                }
+            ]
+        },
+        {
+            "id": "8c8c2fd6-bbb8-44a5-96c0-8137ed2d7ab6",
+            "line": 15,
+            "page": 3,
+            "event_string": "PILOT ONBOARD 8-Oct-2022 13:42",
+            "events": [
+                {
+                    "id": "fdc12919-54c3-47c6-aae0-f12f78438938",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T13:42:00",
+                    "start_date": "2022-10-08T13:42:00",
+                    "timestamp": "2022-10-08T13:42:00",
+                    "event_label": "Pilot - embark (POB)"
+                }
+            ]
+        },
+        {
+            "id": "ac635f4d-e66d-4501-a24d-e1c799a54a97",
+            "line": 16,
+            "page": 3,
+            "event_string": "ANCHOR AWEIGH 8-Oct-2022 14:00",
+            "events": [
+                {
+                    "id": "40198d3c-d537-4cea-bfc0-8b782c3f9414",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T14:00:00",
+                    "start_date": "2022-10-08T14:00:00",
+                    "timestamp": "2022-10-08T14:00:00",
+                    "event_label": "Heave anchor - complete (anchors aweigh)"
+                }
+            ]
+        },
+        {
+            "id": "21739bda-d582-4951-9848-192862e1e0f7",
+            "line": 17,
+            "page": 3,
+            "event_string": "TUGS MADE FAST FWD: MAJU MERCURY / AFT: KST ZODIAC 8-Oct-2022 15:18",
+            "events": [
+                {
+                    "id": "d28e9fef-ae29-4d93-9189-06cb765aa725",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T15:18:00",
+                    "start_date": "2022-10-08T15:18:00",
+                    "timestamp": "2022-10-08T15:18:00",
+                    "event_label": "Tug(s) - alongside"
+                }
+            ]
+        },
+        {
+            "id": "196a2bc4-0150-42cd-8e98-f2d3f88de761",
+            "line": 18,
+            "page": 3,
+            "event_string": "FIRST LINE ASHORE 8-Oct-2022 16:30",
+            "events": [
+                {
+                    "id": "72ea46b6-aac2-4071-87e4-bdaa23e7ed60",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T16:30:00",
+                    "start_date": "2022-10-08T16:30:00",
+                    "timestamp": "2022-10-08T16:30:00",
+                    "event_label": "Mooring - commence (first line)"
+                }
+            ]
+        },
+        {
+            "id": "bfbf9a83-da70-401e-8034-f1103c6539f9",
+            "line": 19,
+            "page": 3,
+            "event_string": "ALL FAST / TUGS CAST OFF 8-Oct-2022 17:00",
+            "events": [
+                {
+                    "id": "2d11f5c5-0dcf-4887-af16-87a52200eec5",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T17:00:00",
+                    "start_date": "2022-10-08T17:00:00",
+                    "timestamp": "2022-10-08T17:00:00",
+                    "event_label": "Mooring - complete (all fast)"
+                }
+            ]
+        },
+        {
+            "id": "44335218-6c59-45a1-bcce-dea82e0212f7",
+            "line": 21,
+            "page": 3,
+            "event_string": "PILOT OFF 8-Oct-2022 17:12",
+            "events": [
+                {
+                    "id": "8840a39d-1a5c-4a56-af0d-d811d0dcd5c3",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T17:12:00",
+                    "start_date": "2022-10-08T17:12:00",
+                    "timestamp": "2022-10-08T17:12:00",
+                    "event_label": "Pilot - embark (POB)"
+                }
+            ]
+        },
+        {
+            "id": "e38ae86b-ebb8-46fc-b21a-405bf4f1c0cb",
+            "line": 22,
+            "page": 3,
+            "event_string": "GANGWAY DOWN 8-Oct-2022 17:12",
+            "events": [
+                {
+                    "id": "5417c527-1b81-48ba-8f4b-f558cfecde7f",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T17:12:00",
+                    "start_date": "2022-10-08T17:12:00",
+                    "timestamp": "2022-10-08T17:12:00",
+                    "event_label": "Secure gangway - complete"
+                }
+            ]
+        },
+        {
+            "id": "8f21d35d-5515-470a-b472-deab0d00d68a",
+            "line": 23,
+            "page": 3,
+            "event_string": "SURVEYOR / LOADING MASTER ONBOARD 8-Oct-2022 17:12",
+            "events": [
+                {
+                    "id": "140f69d9-a4cb-48c6-814a-4d4fef0200f4",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T17:12:00",
+                    "start_date": "2022-10-08T17:12:00",
+                    "timestamp": "2022-10-08T17:12:00",
+                    "event_label": "Surveyor - embark"
+                }
+            ]
+        },
+        {
+            "id": "221cd0e2-8224-4ddf-88fd-d58473ebeb7e",
+            "line": 24,
+            "page": 3,
+            "event_string": "COMMENCE KEY MEETING 8-Oct-2022 17:12",
+            "events": [
+                {
+                    "id": "f39b06cc-8f77-43ae-a172-f67bb011a5ec",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T17:12:00",
+                    "start_date": "2022-10-08T17:12:00",
+                    "timestamp": "2022-10-08T17:12:00",
+                    "event_label": "Pre-ops meeting - commence"
+                }
+            ]
+        },
+        {
+            "id": "3dd2c846-5027-475e-82b9-47ca883a8796",
+            "line": 25,
+            "page": 3,
+            "event_string": "KEY MEETING COMPLETED 8-Oct-2022 18:12",
+            "events": [
+                {
+                    "id": "3661677f-2986-46fd-bac5-70b4624eaf0b",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T18:12:00",
+                    "start_date": "2022-10-08T18:12:00",
+                    "timestamp": "2022-10-08T18:12:00",
+                    "event_label": "Pre-ops meeting - complete"
+                }
+            ]
+        },
+        {
+            "id": "3e89d917-2b9a-486a-ac00-7eb50e62fcd5",
+            "line": 26,
+            "page": 3,
+            "event_string": "COMMENCE TANK INSPECTION 8-Oct-2022 18:12",
+            "events": [
+                {
+                    "id": "22c33d86-5711-40ee-a769-512016e30dbb",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T18:12:00",
+                    "start_date": "2022-10-08T18:12:00",
+                    "timestamp": "2022-10-08T18:12:00",
+                    "event_label": "Inspect holds / tanks - commence"
+                }
+            ]
+        },
+        {
+            "id": "610f8acf-4bf2-4f1f-87b7-68e52bb47fc8",
+            "line": 27,
+            "page": 3,
+            "event_string": "COMMENCE LOADING ARM CONNECTION 8-Oct-2022 19:12",
+            "events": [
+                {
+                    "id": "e57c0caf-cb77-443c-9e39-ac2ebe1a5518",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T19:12:00",
+                    "start_date": "2022-10-08T19:12:00",
+                    "timestamp": "2022-10-08T19:12:00",
+                    "event_label": "Connect hoses / arms - commence"
+                }
+            ]
+        },
+        {
+            "id": "07881044-a55f-4142-82da-a9223b48d338",
+            "line": 28,
+            "page": 3,
+            "event_string": "COMPLETED TANK INSPECTION 8-Oct-2022 19:12",
+            "events": [
+                {
+                    "id": "00744a84-1556-44d8-a8b0-6dfa911d6b28",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T19:12:00",
+                    "start_date": "2022-10-08T19:12:00",
+                    "timestamp": "2022-10-08T19:12:00",
+                    "event_label": "Inspect holds / tanks - complete"
+                }
+            ]
+        },
+        {
+            "id": "3423fc63-6941-4d9c-a364-9f109a400676",
+            "line": 29,
+            "page": 3,
+            "event_string": "COMPLETED LOADING ARM CONNECTION PORTSIDE 12\") 8-Oct-2022 19:24",
+            "events": [
+                {
+                    "id": "73549e8c-a68d-4867-b1b4-0fe18a1e4a69",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T19:24:00",
+                    "start_date": "2022-10-08T19:24:00",
+                    "timestamp": "2022-10-08T19:24:00",
+                    "event_label": "Connect hoses / arms - complete"
+                }
+            ]
+        },
+        {
+            "id": "6be979ad-05a9-483c-bb62-b2b6e8a7031e",
+            "line": 30,
+            "page": 3,
+            "event_string": "N.O.R. ACCEPTED 8-Oct-2022 19:24",
+            "events": [
+                {
+                    "id": "eb1b936f-f53b-46a6-a521-742cc5a6ed57",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T19:24:00",
+                    "start_date": "2022-10-08T19:24:00",
+                    "timestamp": "2022-10-08T19:24:00",
+                    "event_label": "NOR accepted"
+                }
+            ]
+        },
+        {
+            "id": "398903a7-9ac9-4560-830c-26131bf63be5",
+            "line": 31,
+            "page": 3,
+            "event_string": "SURVEYOR/LOADING MASTER OFF 8-Oct-2022 19:30",
+            "events": [
+                {
+                    "id": "9aba845a-737c-4647-8231-9d27d9d38876",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T19:30:00",
+                    "start_date": "2022-10-08T19:30:00",
+                    "timestamp": "2022-10-08T19:30:00",
+                    "event_label": "Load master - embark"
+                }
+            ]
+        },
+        {
+            "id": "8e603bb7-fad4-4585-988b-83bdd6db6dc1",
+            "line": 32,
+            "page": 3,
+            "event_string": "COMMENCED LOADING \"UMS\" 8-Oct-2022 20:15",
+            "events": [
+                {
+                    "id": "97499617-a396-4c83-a36a-3dbd0b5b0606",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T20:15:00",
+                    "start_date": "2022-10-08T20:15:00",
+                    "timestamp": "2022-10-08T20:15:00",
+                    "event_label": "Load - commence"
+                }
+            ]
+        },
+        {
+            "id": "dd375abd-f0f6-4eef-bc9d-2145918737c4",
+            "line": 33,
+            "page": 3,
+            "event_string": "DOPING SURVEYOR ONBOARD 8-Oct-2022 21:24",
+            "events": [
+                {
+                    "id": "634724a0-6cad-4eb5-9e7d-35a3230b13bb",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T21:24:00",
+                    "start_date": "2022-10-08T21:24:00",
+                    "timestamp": "2022-10-08T21:24:00",
+                    "event_label": "Surveyor - embark"
+                }
+            ]
+        },
+        {
+            "id": "c8e919e7-db5e-490d-9446-4a5d3d61a0a5",
+            "line": 34,
+            "page": 3,
+            "event_string": "COMMENCED DOPING 8-Oct-2022 22:30",
+            "events": [
+                {
+                    "id": "20d700e0-4f7f-41e7-9363-8b1a95877cf1",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-08T22:30:00",
+                    "start_date": "2022-10-08T22:30:00",
+                    "timestamp": "2022-10-08T22:30:00",
+                    "event_label": "Inert / purge - commence"
+                }
+            ]
+        },
+        {
+            "id": "de3a91d2-23fc-4ecb-938a-679280f70c5c",
+            "line": 35,
+            "page": 3,
+            "event_string": "COMPLETED DOPING 9-Oct-2022 02:30",
+            "events": [
+                {
+                    "id": "ecd222e1-7495-4daf-9810-70ddfd5d5a8c",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-09T02:30:00",
+                    "start_date": "2022-10-09T02:30:00",
+                    "timestamp": "2022-10-09T02:30:00",
+                    "event_label": "Inert / purge - complete"
+                }
+            ]
+        },
+        {
+            "id": "f2b997a3-c647-47fe-83f7-cf68739d3161",
+            "line": 37,
+            "page": 3,
+            "event_string": "LOADING SUSPENDED 9-Oct-2022 06:06",
+            "events": [
+                {
+                    "id": "41a478df-754a-42f8-b151-6468c5ab1192",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-09T06:06:00",
+                    "start_date": "2022-10-09T06:06:00",
+                    "timestamp": "2022-10-09T06:06:00",
+                    "event_label": "Load - suspend"
+                }
+            ]
+        },
+        {
+            "id": "181dfe2f-4f6c-4313-8f39-e357c7ffe8bb",
+            "line": 38,
+            "page": 3,
+            "event_string": "LOADING RESUMED 9-Oct-2022 09:18",
+            "events": [
+                {
+                    "id": "bfb63061-d3dc-42d1-a163-6fb8c3fef417",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-09T09:18:00",
+                    "start_date": "2022-10-09T09:18:00",
+                    "timestamp": "2022-10-09T09:18:00",
+                    "event_label": "Load - resume"
+                }
+            ]
+        },
+        {
+            "id": "5acbd202-6396-4c52-b1af-10d9f1b2df2f",
+            "line": 39,
+            "page": 3,
+            "event_string": "COMPLETED LOADING - SHORE STOP 10-Oct-2022 01:30",
+            "events": [
+                {
+                    "id": "ab9960ff-6469-4f7f-896a-6ee105bdd217",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T01:30:00",
+                    "start_date": "2022-10-10T01:30:00",
+                    "timestamp": "2022-10-10T01:30:00",
+                    "event_label": "Load - complete"
+                }
+            ]
+        },
+        {
+            "id": "a533a5dc-d11d-4ea7-9c5d-a722d058e58f",
+            "line": 40,
+            "page": 3,
+            "event_string": "COMMENCED ULLAGING / SURVEYOR ONBOARD 10-Oct-2022 01:36",
+            "events": [
+                {
+                    "id": "2c1a5d0a-56e5-4b56-918d-5e5a0b869d7d",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T01:36:00",
+                    "start_date": "2022-10-10T01:36:00",
+                    "timestamp": "2022-10-10T01:36:00",
+                    "event_label": "Surveyor - embark"
+                }
+            ]
+        },
+        {
+            "id": "8214aa38-e13d-458f-9411-85d3e7c900b2",
+            "line": 41,
+            "page": 3,
+            "event_string": "COMMENCED CARGO SAMPLING 10-Oct-2022 01:36",
+            "events": [
+                {
+                    "id": "49a2c306-1991-4cd5-a0a7-f6a1eafb1d36",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T01:36:00",
+                    "start_date": "2022-10-10T01:36:00",
+                    "timestamp": "2022-10-10T01:36:00",
+                    "event_label": "Samples - commence"
+                }
+            ]
+        },
+        {
+            "id": "b57e47be-63a6-41ec-8b93-ea35f7eeb496",
+            "line": 42,
+            "page": 3,
+            "event_string": "COMPLETED ULLAGING 10-Oct-2022 02:36",
+            "events": [
+                {
+                    "id": "6d7fd00d-5ed3-4cd8-8a2c-dcafbd671c7b",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T02:36:00",
+                    "start_date": "2022-10-10T02:36:00",
+                    "timestamp": "2022-10-10T02:36:00",
+                    "event_label": "Ullage / gauge - complete"
+                }
+            ]
+        },
+        {
+            "id": "de9a7cdb-a495-4cda-8c2b-0ef45a8b4e2d",
+            "line": 5,
+            "page": 4,
+            "event_string": "COMPLETED CARGO SAMPLING 10-Oct-2022 2:36",
+            "events": [
+                {
+                    "id": "54d8aebb-6983-4e6f-a9e6-50d1f4a26d67",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T02:36:00",
+                    "start_date": "2022-10-10T02:36:00",
+                    "timestamp": "2022-10-10T02:36:00",
+                    "event_label": "Samples - complete"
+                }
+            ]
+        },
+        {
+            "id": "1623189c-9700-4387-b3b5-3fb2f48067a1",
+            "line": 6,
+            "page": 4,
+            "event_string": "COMMENCED CARGO CALCULATION 10-Oct-2022 2:36",
+            "events": [
+                {
+                    "id": "dac31327-04eb-4841-9591-5d951134e30b",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T02:36:00",
+                    "start_date": "2022-10-10T02:36:00",
+                    "timestamp": "2022-10-10T02:36:00",
+                    "event_label": "Calculate cargo - commence"
+                }
+            ]
+        },
+        {
+            "id": "5fc214e0-601f-45fb-b5c6-ad504c0acf7f",
+            "line": 7,
+            "page": 4,
+            "event_string": "COMPLETED CARGO CALCULATION 10-Oct-2022 2:48",
+            "events": [
+                {
+                    "id": "3a78ad50-5da7-4e60-beac-29381ebae8da",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T02:48:00",
+                    "start_date": "2022-10-10T02:48:00",
+                    "timestamp": "2022-10-10T02:48:00",
+                    "event_label": "Calculate cargo - complete"
+                }
+            ]
+        },
+        {
+            "id": "067afb0d-7655-46ac-b33d-79aca2e47502",
+            "line": 8,
+            "page": 4,
+            "event_string": "COMMENCED LOADING ARM DISCONNECTION 10-Oct-2022 2:48",
+            "events": [
+                {
+                    "id": "e599392a-6451-4f6b-94df-5c816dbb8a4e",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T02:48:00",
+                    "start_date": "2022-10-10T02:48:00",
+                    "timestamp": "2022-10-10T02:48:00",
+                    "event_label": "Disconnect hoses / arms - commence"
+                }
+            ]
+        },
+        {
+            "id": "778f5a05-f151-495b-9962-7ee0af411af5",
+            "line": 9,
+            "page": 4,
+            "event_string": "COMPLETED LOADING ARM DISCONNECTION 10-Oct-2022 2:54",
+            "events": [
+                {
+                    "id": "ed1c5b7d-7453-4fd0-82ea-f45653dfb2b4",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T02:54:00",
+                    "start_date": "2022-10-10T02:54:00",
+                    "timestamp": "2022-10-10T02:54:00",
+                    "event_label": "Disconnect hoses / arms - complete"
+                }
+            ]
+        },
+        {
+            "id": "6b547a01-e5bc-4464-aca4-c91271b328b6",
+            "line": 10,
+            "page": 4,
+            "event_string": "CARGO DOCUMENTS ONBOARD / LOADING MASTER ONBOARD 10-Oct-2022 3:00",
+            "events": [
+                {
+                    "id": "cffbeb84-9844-45d5-81df-17fbed127b27",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T03:00:00",
+                    "start_date": "2022-10-10T03:00:00",
+                    "timestamp": "2022-10-10T03:00:00",
+                    "event_label": "Prepare documents - complete"
+                }
+            ]
+        },
+        {
+            "id": "6a496e56-de91-492e-aeaa-a5a6a19a358a",
+            "line": 11,
+            "page": 4,
+            "event_string": "CARGO DOCUMENTS SIGNED 10-Oct-2022 4:00",
+            "events": [
+                {
+                    "id": "36d62afa-1883-4564-8556-19639a83b516",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T04:00:00",
+                    "start_date": "2022-10-10T04:00:00",
+                    "timestamp": "2022-10-10T04:00:00",
+                    "event_label": "Prepare documents - complete"
+                }
+            ]
+        },
+        {
+            "id": "798a8299-e426-4214-b90c-c3751c035d52",
+            "line": 12,
+            "page": 4,
+            "event_string": "AGENT ONBOARD 10-Oct-2022 04:18",
+            "events": [
+                {
+                    "id": "d0a097ca-8fc7-46d1-b714-48b9bf4a2e5b",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T04:18:00",
+                    "start_date": "2022-10-10T04:18:00",
+                    "timestamp": "2022-10-10T04:18:00",
+                    "event_label": "Agent - embark"
+                }
+            ]
+        },
+        {
+            "id": "8d8ae5ad-e2fc-4179-9840-e1d1b134eb40",
+            "line": 13,
+            "page": 4,
+            "event_string": "AGENT/SURVEYOR/ LOADING MASTER OFF 10-Oct-2022 04:48",
+            "events": [
+                {
+                    "id": "bb8591be-419e-435d-a57a-142602d5d539",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T04:48:00",
+                    "start_date": "2022-10-10T04:48:00",
+                    "timestamp": "2022-10-10T04:48:00",
+                    "event_label": "Surveyor - embark"
+                }
+            ]
+        },
+        {
+            "id": "ac7aa7e8-fba4-459d-bdd4-433052c4657e",
+            "line": 14,
+            "page": 4,
+            "event_string": "PILOT ONBOARD 10-Oct-2022 05:36",
+            "events": [
+                {
+                    "id": "2587f6b1-ad1c-4175-88be-aab9769f1128",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T05:36:00",
+                    "start_date": "2022-10-10T05:36:00",
+                    "timestamp": "2022-10-10T05:36:00",
+                    "event_label": "Pilot - embark (POB)"
+                }
+            ]
+        },
+        {
+            "id": "ee48babf-7cea-41ca-a642-d793aea3f112",
+            "line": 16,
+            "page": 4,
+            "event_string": "TUGS CLEAR FWD & AFT 10-Oct-2022 06:12",
+            "events": [
+                {
+                    "id": "4072edbd-b942-4fbd-b8fa-5d7537849c4b",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T06:12:00",
+                    "start_date": "2022-10-10T06:12:00",
+                    "timestamp": "2022-10-10T06:12:00",
+                    "event_label": "Tug(s) - away"
+                }
+            ]
+        },
+        {
+            "id": "81729180-f07c-4ca2-bcf3-9e2ab02bce4e",
+            "line": 17,
+            "page": 4,
+            "event_string": "PILOT OFF 10-Oct-2022 07:12",
+            "events": [
+                {
+                    "id": "02f61d10-34c5-4c95-a9bd-85cec5f47989",
+                    "type": "timestamp_event",
+                    "end_date": "2022-10-10T07:12:00",
+                    "start_date": "2022-10-10T07:12:00",
+                    "timestamp": "2022-10-10T07:12:00",
+                    "event_label": "Pilot - embark (POB)"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,228 @@
+{
+    "id": "1",
+    "name": "Contract",
+    "configuration": {
+        "weekSchedule": {
+            "general": {
+                "workingHours": [
+                    {
+                        "days": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6
+                        ],
+                        "hourRange": {
+                            "from": "00:00",
+                            "to": "00:00"
+                        }
+                    }
+                ]
+            }
+        },
+        "demurrage": {
+            "general": {
+                "rates": [
+                    {
+                        "uuid": "1ea7db04-eaaa-4829-9268-b99536f79c4a",
+                        "rate": 24000,
+                        "startTime": 0,
+                        "endTime": 0
+                    }
+                ],
+                "despatch": {
+                    "amount": 0,
+                    "isPercentageOfDemurrage": false
+                },
+                "isDespatch": false,
+                "currency": "USD",
+                "laytimeAllowed": {
+                    "isReversible": false
+                }
+            }
+        }
+    },
+    "clauses": {
+        "demurrage": [
+            {
+                "id": "a923e9ec-1111-4066-aed4-78fb798d1901",
+                "name": "LAYTIME / DEMURRAGE (NOR+6 before Ops)",
+                "description": "LAYTIME / DEMURRAGE (NOR+6 before Ops)",
+                "contractClauseIdentifier": "1",
+                "conditionals": [
+                    {
+                        "id": "a963b16d-30cd-4bd1-ab43-6addfb18a601",
+                        "operation": "if_exists",
+                        "arguments": {
+                            "event": {
+                                "key": "nor_tendered",
+                                "type": "timestamp"
+                            }
+                        }
+                    }
+                ],
+                "startEventSelector": {
+                    "operation": "single_event",
+                    "arguments": {
+                        "event": {
+                            "key": "nor_tendered",
+                            "type": "timestamp"
+                        },
+                        "modifier": 6
+                    }
+                },
+                "endEventSelector": {
+                    "operation": "last_instance_of_event",
+                    "arguments": {
+                        "events": [
+                            {
+                                "key": "disconnecting_hoses_end",
+                                "type": "timestamp"
+                            },
+                            {
+                                "key": "process",
+                                "sub_category_key": "disconnecting_hoses",
+                                "type": "duration_end"
+                            }
+                        ]
+                    }
+                },
+                "isOn": true,
+                "effect": {
+                    "type": "event_range",
+                    "operation": "add",
+                    "factor": 100,
+                    "dontApplyWhenDemurrage": false
+                }
+            },
+            {
+                "id": "a5c48527-1d9e-46b0-810d-e4c80e98c921",
+                "name": "HALF-RATE DEMURRAGE (Weather)",
+                "description": "HALF-RATE DEMURRAGE (Weather)",
+                "contractClauseIdentifier": "2",
+                "conditionals": [
+                    {
+                        "id": "cd32529c-e9ac-4eee-8d2e-66980c46dc97",
+                        "operation": "is_event_before",
+                        "arguments": {
+                            "firstEvent": {
+                                "key": "loading_suspend",
+                                "type": "timestamp"
+                            },
+                            "secondEvent": {
+                                "key": "awaiting",
+                                "sub_category_key": "weather",
+                                "type": "duration_start"
+                            }
+                        }
+                    },
+                    {
+                        "id": "8b93f4f5-96ff-4f52-8e8a-8903517d23d8",
+                        "operation": "is_event_before",
+                        "arguments": {
+                            "firstEvent": {
+                                "key": "discharging_suspend",
+                                "type": "timestamp"
+                            },
+                            "secondEvent": {
+                                "key": "awaiting",
+                                "sub_category_key": "weather",
+                                "type": "duration_start"
+                            }
+                        },
+                        "relation": {
+                            "conditionalId": "cd32529c-e9ac-4eee-8d2e-66980c46dc97",
+                            "type": "or"
+                        }
+                    }
+                ],
+                "startEventSelector": {
+                    "operation": "single_event",
+                    "arguments": {
+                        "event": {
+                            "key": "awaiting",
+                            "sub_category_key": "weather",
+                            "type": "duration_start"
+                        }
+                    }
+                },
+                "endEventSelector": {
+                    "operation": "single_event",
+                    "arguments": {
+                        "event": {
+                            "key": "awaiting",
+                            "sub_category_key": "weather",
+                            "type": "duration_end"
+                        }
+                    }
+                },
+                "isOn": true,
+                "effect": {
+                    "type": "event_range",
+                    "rateType": "full",
+                    "operation": "deduct",
+                    "factor": 50,
+                    "dontApplyWhenDemurrage": false
+                }
+            },
+            {
+                "id": "abac83b0-76f3-47fd-8b23-4a5a206e3b86",
+                "name": "LOADING / DISCHARGING PLACE.OFF BERTH (SHIFTING - Heave Anchor before NOR+6)",
+                "description": "LOADING / DISCHARGING PLACE.OFF BERTH (SHIFTING - Heave Anchor before NOR+6)",
+                "contractClauseIdentifier": "3",
+                "conditionals": [
+                    {
+                        "id": "f53ef57b-5a13-4bf8-91ac-31f42b90253b",
+                        "operation": "is_event_before",
+                        "arguments": {
+                            "firstEvent": {
+                                "key": "heaving_anchor_end",
+                                "type": "timestamp"
+                            },
+                            "secondEvent": {
+                                "key": "nor_tendered",
+                                "type": "timestamp"
+                            },
+                            "secondEventModifier": 6
+                        }
+                    }
+                ],
+                "startEventSelector": {
+                    "operation": "single_event",
+                    "arguments": {
+                        "event": {
+                            "key": "nor_tendered",
+                            "type": "timestamp"
+                        },
+                        "modifier": 6
+                    }
+                },
+                "endEventSelector": {
+                    "operation": "first_instance_of_event",
+                    "arguments": {
+                        "events": [
+                            {
+                                "key": "securing_gangway_end",
+                                "type": "timestamp"
+                            },
+                            {
+                                "key": "mooring_vessel_end",
+                                "type": "timestamp"
+                            }
+                        ]
+                    }
+                },
+                "isOn": true,
+                "effect": {
+                    "type": "event_range",
+                    "operation": "deduct",
+                    "factor": 100,
+                    "dontApplyWhenDemurrage": false
+                }
+            }
+        ]
+    }
+}
