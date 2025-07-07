@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="panel-content" v-if="contractResults">
       <!-- Financial Summary Cards -->
       <div class="financial-summary">
@@ -78,11 +78,11 @@
               </div>
               <span class="group-count">{{ addEvents.length }} event{{ addEvents.length !== 1 ? 's' : '' }}</span>
             </div>
-            
+
             <div class="clause-list">
-              <div 
-                v-for="event in addEvents" 
-                :key="event.clauseId" 
+              <div
+                v-for="event in addEvents"
+                :key="event.clauseId"
                 class="clause-item add-item"
               >
                 <div class="clause-header">
@@ -111,11 +111,11 @@
               </div>
               <span class="group-count">{{ deductEvents.length }} event{{ deductEvents.length !== 1 ? 's' : '' }}</span>
             </div>
-            
+
             <div class="clause-list">
-              <div 
-                v-for="event in deductEvents" 
-                :key="event.clauseId" 
+              <div
+                v-for="event in deductEvents"
+                :key="event.clauseId"
                 class="clause-item deduct-item"
               >
                 <div class="clause-header">
@@ -142,7 +142,7 @@
             <p class="empty-description">
               Check that your events match the clause conditions. Available events are listed below for debugging.
             </p>
-            
+
             <!-- Debug Information -->
             <div class="debug-section">
               <details class="debug-details">
@@ -152,9 +152,9 @@
                 </summary>
                 <div class="debug-content">
                   <div v-if="contractResults?.events?.length" class="debug-list">
-                    <div 
-                      v-for="(event, index) in contractResults.events" 
-                      :key="index" 
+                    <div
+                      v-for="(event, index) in contractResults.events"
+                      :key="index"
                       class="debug-item"
                     >
                       <div class="debug-event-info">
@@ -174,7 +174,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Loading State -->
     <div v-else class="loading-state">
       <div class="loading-spinner"></div>
@@ -191,11 +191,11 @@ import moment from 'moment'
 export default class ContractClausesPanel extends Vue {
   @Prop() readonly contractResults!: any
   @Prop() readonly demurrageCalculation!: any
-  
+
   get addEvents() {
     return this.contractResults?.add_events || []
   }
-  
+
   get deductEvents() {
     return this.contractResults?.deduct_events || []
   }
@@ -213,47 +213,47 @@ export default class ContractClausesPanel extends Vue {
     if (!this.demurrageCalculation) return ''
     return this.demurrageCalculation.demurrageAmount > 0 ? 'Demurrage Due' : 'Dispatch Earned'
   }
-  
+
   get formattedDemurrageAmount() {
     if (!this.demurrageCalculation) return '—'
     return `$${this.demurrageCalculation.demurrageAmount.toLocaleString('en-US', { maximumFractionDigits: 2 })}`
   }
-  
+
   get formattedDemurrageTime() {
     if (!this.demurrageCalculation) return '—'
     return this.formatDuration(this.demurrageCalculation.demurrageMinutes)
   }
-  
+
   get formattedAddedTime() {
     if (!this.demurrageCalculation) return '—'
     return this.formatDuration(this.demurrageCalculation.addedMinutes)
   }
-  
+
   get formattedDeductedTime() {
     if (!this.demurrageCalculation) return '—'
     return this.formatDuration(this.demurrageCalculation.deductedMinutes)
   }
-  
+
   formatDuration(minutes: number): string {
     const days = Math.floor(minutes / 1440)
     const hours = Math.floor((minutes % 1440) / 60)
     const mins = Math.floor(minutes % 60)
-    
+
     let result = ''
     if (days > 0) result += `${days}d `
     if (hours > 0 || days > 0) result += `${hours}h `
     result += `${mins}m`
-    
+
     return result.trim()
   }
-  
+
   formatDateRange(start: string, end: string): string {
     const startDate = moment(start)
     const endDate = moment(end)
-    
+
     return `${startDate.format('DD MMM HH:mm')} - ${endDate.format('DD MMM HH:mm')}`
   }
-  
+
   formatDate(date: string): string {
     return moment(date).format('DD MMM YYYY HH:mm')
   }
@@ -265,12 +265,12 @@ export default class ContractClausesPanel extends Vue {
     const adjustedMinutes = (minutes * event.factor) / 100
     return this.formatDuration(adjustedMinutes)
   }
-  
+
   getClauseName(clauseId: string): string {
     if (clauseId === 'fallback') {
       return 'Default Time Range'
     }
-    
+
     // Try to find the clause in the contract data
     const contractData = this.contractResults?.contractData
     if (contractData?.clauses?.demurrage) {
@@ -279,7 +279,7 @@ export default class ContractClausesPanel extends Vue {
         return clause.name
       }
     }
-    
+
     // If we can't find the clause name, return the ID
     return `Clause ${clauseId.substring(0, 8)}`
   }
@@ -347,7 +347,6 @@ export default class ContractClausesPanel extends Vue {
 
 .summary-card {
   background: #f8fafc;
-  border-radius: 12px;
   padding: 1.5rem;
   border: 1px solid #e2e8f0;
   transition: all 0.2s ease;
@@ -355,15 +354,7 @@ export default class ContractClausesPanel extends Vue {
   overflow: hidden;
 }
 
-.summary-card:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(45deg, #667eea, #764ba2);
-}
+
 
 .card-header {
   display: flex;
@@ -463,7 +454,6 @@ export default class ContractClausesPanel extends Vue {
 /* Clauses Section */
 .clauses-section {
   background: #f8fafc;
-  border-radius: 12px;
   padding: 1.5rem;
   border: 1px solid #e2e8f0;
 }
@@ -778,27 +768,27 @@ export default class ContractClausesPanel extends Vue {
   .panel-content {
     padding: 1rem;
   }
-  
+
   .summary-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .section-header {
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
   }
-  
+
   .clause-header {
     flex-direction: column;
     gap: 0.5rem;
     align-items: flex-start;
   }
-  
+
   .time-breakdown {
     gap: 0.5rem;
   }
-  
+
   .group-header {
     flex-direction: column;
     gap: 0.5rem;

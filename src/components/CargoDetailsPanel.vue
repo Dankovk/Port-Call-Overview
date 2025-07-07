@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="panel-content">
       <div class="cargo-grid">
         <!-- Cargoes Card -->
@@ -18,7 +18,6 @@
             <div class="card-icon cargo-icon">📦</div>
             <div class="card-title">
               <h4>Cargoes</h4>
-              <span class="card-subtitle">Types in operation</span>
             </div>
           </div>
           <div class="card-value">
@@ -37,7 +36,6 @@
             <!-- <div class="card-icon rate-icon">⚡</div> -->
             <div class="card-title">
               <h4>{{ rateLabel }}</h4>
-              <span class="card-subtitle">Handling rate</span>
             </div>
           </div>
           <div class="card-value">
@@ -58,7 +56,6 @@
             </div>
             <div class="card-title">
               <h4>Operation</h4>
-              <span class="card-subtitle">Current activity</span>
             </div>
           </div>
           <div class="card-value">
@@ -124,11 +121,31 @@ export default class CargoDetailsPanel extends Vue {
   get operationStatus(): string {
     // Determine status based on actual events if available
     const events = this.portCall?.events || []
-    const hasLoadComplete = events.some(e => e.key === 'load_completed' || e.key === 'load_complete')
-    const hasDischargeComplete = events.some(e => e.key === 'discharge_completed' || e.key === 'discharge_complete')
-    const hasLoadCommence = events.some(e => e.key === 'load_commenced' || e.key === 'load_commence')
-    const hasDischargeCommence = events.some(e => e.key === 'discharge_commenced' || e.key === 'discharge_commence')
-    
+
+    // Check for completion events (multiple ways to match)
+    const hasLoadComplete = events.some(e =>
+      e.key === 'load_completed' ||
+      e.key === 'load_complete' ||
+      (e.name && e.name.toLowerCase().includes('load') && e.name.toLowerCase().includes('complet'))
+    )
+    const hasDischargeComplete = events.some(e =>
+      e.key === 'discharge_completed' ||
+      e.key === 'discharge_complete' ||
+      (e.name && e.name.toLowerCase().includes('discharge') && e.name.toLowerCase().includes('complet'))
+    )
+
+    // Check for commence events
+    const hasLoadCommence = events.some(e =>
+      e.key === 'load_commenced' ||
+      e.key === 'load_commence' ||
+      (e.name && e.name.toLowerCase().includes('load') && e.name.toLowerCase().includes('commence'))
+    )
+    const hasDischargeCommence = events.some(e =>
+      e.key === 'discharge_commenced' ||
+      e.key === 'discharge_commence' ||
+      (e.name && e.name.toLowerCase().includes('discharge') && e.name.toLowerCase().includes('commence'))
+    )
+
     if (hasLoadComplete || hasDischargeComplete) return 'Complete'
     if (hasLoadCommence || hasDischargeCommence) return 'In Progress'
     return 'Pending'
@@ -145,10 +162,10 @@ export default class CargoDetailsPanel extends Vue {
 
   get totalCargoQuantity(): string {
     if (!this.portCallCargoes?.length) return '—'
-    
+
     const total = this.portCallCargoes.reduce((sum, cargo) => sum + (cargo.quantity || 0), 0)
     const unit = this.portCallCargoes[0]?.unit || 'MT'
-    
+
     return total > 0 ? `${new Intl.NumberFormat('en-US').format(total)} ${unit}` : '—'
   }
 
@@ -189,10 +206,10 @@ export default class CargoDetailsPanel extends Vue {
   get estimatedDuration(): string {
     // Calculate estimated duration based on cargo quantity and rate
     if (!this.cargoHandlingRate || !this.portCallCargoes?.length) return '—'
-    
+
     const totalQuantity = this.portCallCargoes.reduce((sum, cargo) => sum + (cargo.quantity || 0), 0)
     const durationDays = totalQuantity / this.cargoHandlingRate
-    
+
     if (durationDays < 1) {
       return `${Math.round(durationDays * 24)}h`
     } else {
@@ -202,8 +219,8 @@ export default class CargoDetailsPanel extends Vue {
 
   formatHandlingRate(rate: number | undefined): string {
     if (!rate) return '—'
-    return new Intl.NumberFormat('en-US', { 
-      maximumFractionDigits: 0 
+    return new Intl.NumberFormat('en-US', {
+      maximumFractionDigits: 0
     }).format(rate)
   }
 }
@@ -213,8 +230,8 @@ export default class CargoDetailsPanel extends Vue {
 .cargo-details-panel {
   background: white;
   overflow: hidden;
-  
-  
+
+
 }
 
 /* Panel Header */
@@ -267,7 +284,7 @@ export default class CargoDetailsPanel extends Vue {
 /* Detail Cards */
 .detail-card {
   background: #f8fafc;
-  
+
   padding: 1.5rem;
   border: 1px solid #e2e8f0;
   transition: all 0.2s ease;
@@ -373,9 +390,19 @@ export default class CargoDetailsPanel extends Vue {
   letter-spacing: 0.025em;
 }
 
-.status-badge.active {
+.status-badge.complete {
   background: rgba(16, 185, 129, 0.1);
   color: #059669;
+}
+
+.status-badge.in-progress {
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+}
+
+.status-badge.pending {
+  background: rgba(107, 114, 128, 0.1);
+  color: #4b5563;
 }
 
 /* Performance Section */
@@ -445,28 +472,28 @@ export default class CargoDetailsPanel extends Vue {
   .panel-content {
     padding: 1rem;
   }
-  
+
   .cargo-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .detail-card {
     padding: 1rem;
   }
-  
+
   .metrics-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .panel-header {
     padding: 1rem 1.5rem;
   }
-  
+
   .header-content {
     gap: 0.75rem;
   }
-  
+
   .header-icon {
     font-size: 1.5rem;
   }

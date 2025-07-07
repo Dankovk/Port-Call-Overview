@@ -48,7 +48,7 @@
                 <div class="event-meta">
                   <span v-if="getEventCode(row)" class="event-code">{{ getEventCode(row) }}</span>
                   <span class="event-type-badge" :class="getEventTypeClass(row)">
-                    {{ getEventTypeLabel(getEventType(row)) }}
+                    {{ getEventTypeLabel(row) }}
                   </span>
                 </div>
               </div>
@@ -144,13 +144,15 @@ export default class Calculator extends Vue {
     
     // Operational events
     if (eventName.includes('berth') || eventName.includes('unberthed') || 
-        eventName.includes('mooring') || eventName.includes('anchor')) {
+        eventName.includes('mooring') || eventName.includes('anchor') ||
+        eventName.includes('pilot') || eventName.includes('tug')) {
       return 'operational'
     }
     
     // Commercial events
     if (eventName.includes('nor') || eventName.includes('notice') ||
-        eventName.includes('discharge') || eventName.includes('load')) {
+        eventName.includes('discharge') || eventName.includes('load') ||
+        eventName.includes('cargo') || eventName.includes('ullage')) {
       return 'commercial'
     }
     
@@ -162,21 +164,50 @@ export default class Calculator extends Vue {
     
     // Administrative events
     if (eventName.includes('document') || eventName.includes('clearance') ||
-        eventName.includes('customs')) {
+        eventName.includes('customs') || eventName.includes('agent') ||
+        eventName.includes('surveyor') || eventName.includes('master') ||
+        eventName.includes('meeting') || eventName.includes('inspection') ||
+        eventName.includes('sample') || eventName.includes('calculation')) {
       return 'administrative'
     }
     
     return 'operational' // default
   }
 
-  getEventTypeLabel(type: string): string {
-    const typeMap: { [key: string]: string } = {
-      'timestamp': 'Timestamp',
-      'duration_start': 'Start',
-      'duration_end': 'End',
-      'duration': 'Duration'
+  getEventTypeLabel(event: any): string {
+    const eventName = event.name?.toLowerCase() || ''
+    const eventCode = event.event_code?.toLowerCase() || ''
+    
+    // Operational events
+    if (eventName.includes('berth') || eventName.includes('unberthed') || 
+        eventName.includes('mooring') || eventName.includes('anchor') ||
+        eventName.includes('pilot') || eventName.includes('tug')) {
+      return 'Operational'
     }
-    return typeMap[type] || type
+    
+    // Commercial events
+    if (eventName.includes('nor') || eventName.includes('notice') ||
+        eventName.includes('discharge') || eventName.includes('load') ||
+        eventName.includes('cargo') || eventName.includes('ullage')) {
+      return 'Commercial'
+    }
+    
+    // Weather events
+    if (eventName.includes('weather') || eventName.includes('awaiting') ||
+        eventCode.includes('weather')) {
+      return 'Weather'
+    }
+    
+    // Administrative events
+    if (eventName.includes('document') || eventName.includes('clearance') ||
+        eventName.includes('customs') || eventName.includes('agent') ||
+        eventName.includes('surveyor') || eventName.includes('master') ||
+        eventName.includes('meeting') || eventName.includes('inspection') ||
+        eventName.includes('sample') || eventName.includes('calculation')) {
+      return 'Administrative'
+    }
+    
+    return 'Operational' // default
   }
 
   getEventStatusClass(event: any): string {
@@ -186,10 +217,6 @@ export default class Calculator extends Vue {
 
   getEventCode(row: ListRow): string {
     return (row as any).event_code || ''
-  }
-
-  getEventType(row: ListRow): string {
-    return (row as any).type || ''
   }
 }
 </script>
