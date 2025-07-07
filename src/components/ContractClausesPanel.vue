@@ -458,6 +458,8 @@ export default class ContractClausesPanel extends Vue {
   border: 1px solid #e2e8f0;
 }
 
+
+
 .section-header {
   display: flex;
   justify-content: space-between;
