@@ -44,7 +44,7 @@
               </div>
               
               <div class="event-details">
-                <h5 class="event-name">{{ row.name }}</h5>
+                <h5 class="event-name">{{ getDisplayEventName(row) }}</h5>
                 <div class="event-meta">
                   <span v-if="getEventCode(row)" class="event-code">{{ getEventCode(row) }}</span>
                   <span class="event-type-badge" :class="getEventTypeClass(row)">
@@ -88,7 +88,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import moment from 'moment'
-import { PortCall, Sof, ListRow } from '../types'
+import type { PortCall, Sof, ListRow } from '../types'
+import { getEventMappingByLabel } from '../utils/event-mapper'
 
 @Component
 export default class Calculator extends Vue {
@@ -138,7 +139,7 @@ export default class Calculator extends Vue {
     return ''
   }
 
-  getEventTypeClass(event: any): string {
+  getEventTypeClass(event: ListRow): string {
     const eventName = event.name?.toLowerCase() || ''
     const eventCode = event.event_code?.toLowerCase() || ''
     
@@ -174,7 +175,7 @@ export default class Calculator extends Vue {
     return 'operational' // default
   }
 
-  getEventTypeLabel(event: any): string {
+  getEventTypeLabel(event: ListRow): string {
     const eventName = event.name?.toLowerCase() || ''
     const eventCode = event.event_code?.toLowerCase() || ''
     
@@ -216,7 +217,15 @@ export default class Calculator extends Vue {
   }
 
   getEventCode(row: ListRow): string {
-    return (row as any).event_code || ''
+    return row.event_code || ''
+  }
+
+  getDisplayEventName(row: ListRow): string {
+    if (!row.name) return ''
+    
+    // Use the event mapping to get a clean display name
+    const mapping = getEventMappingByLabel(row.name)
+    return mapping?.label || row.name
   }
 }
 </script>

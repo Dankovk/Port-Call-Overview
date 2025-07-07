@@ -8,31 +8,35 @@
             <div class="logo-icon">⚓</div>
             <h1 class="app-title">Port Call Overview</h1>
           </div>
-
         </div>
-
       </div>
     </header>
 
     <!-- Main Content -->
     <main class="app-main">
       <div class="container">
-        <port-call-container
-          :port-call="portCall"
-          :terminal="terminal"
-          :berth="berth"
-          :port="port"
-          :selected-sof="selectedSof"
-          :sofs="sofs"
-        />
+        <!-- Error Display -->
+        <div v-if="portCallStore.error" class="error-message">
+          <div class="error-content">
+            <h3>Unable to Load Port Call Data</h3>
+            <p>{{ portCallStore.error }}</p>
+            <button @click="retryLoading" class="ds-button">
+              <span v-if="portCallStore.isLoading" class="ds-progress-circular size-small"></span>
+              <span v-else>Retry</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <port-call-container v-else />
       </div>
     </main>
 
     <!-- Loading Overlay -->
-    <div v-if="isLoading" class="loading-overlay">
+    <div v-if="portCallStore.isAnyLoading" class="loading-overlay">
       <div class="loading-content">
         <div class="loading-spinner"></div>
-        <p>Loading port call data...</p>
+        <p>{{ loadingMessage }}</p>
       </div>
     </div>
   </div>
@@ -41,8 +45,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import PortCallContainer from './components/PortCallContainer.vue'
-import { PortCall, Terminal, Berth, Port, Sof } from './types'
-import { createPortCallFromSof } from './utils/sof-converter'
+import { usePortCallStore } from './stores/port-call-store'
 
 @Component({
   components: {
@@ -50,39 +53,23 @@ import { createPortCallFromSof } from './utils/sof-converter'
   }
 })
 export default class App extends Vue {
-  portCall: PortCall | null = null
-  terminal: Terminal | null = null
-  berth: Berth | null = null
-  port: Port | null = null
-  selectedSof: Sof | null = null
-  sofs: Sof[] = []
-  isLoading = true
+  portCallStore = usePortCallStore()
 
   async mounted() {
-    try {
-      // Load SOF data
-      const sofResponse = await fetch('sof.json')
-      const sofData = await sofResponse.json()
+    // Initialize port call data
+    await this.portCallStore.initializePortCall()
+  }
 
-      // Create port call data from SOF
-      const portCallData = createPortCallFromSof(sofData)
+  get loadingMessage(): string {
+    if (this.portCallStore.isLoading) return 'Loading port call data...'
+    if (this.portCallStore.isLoadingContract) return 'Processing contract logic...'
+    if (this.portCallStore.isLoadingDemurrage) return 'Calculating demurrage...'
+    return 'Loading...'
+  }
 
-      this.portCall = portCallData.portCall
-      this.terminal = portCallData.terminal
-      this.berth = portCallData.berth
-      this.port = portCallData.port
-      this.selectedSof = {
-        id: sofData.id.toString(),
-        name: sofData.name,
-        isMain: true
-      }
-      this.sofs = [this.selectedSof]
-
-    } catch (error) {
-      console.error('Error loading SOF data:', error)
-    } finally {
-      this.isLoading = false
-    }
+  async retryLoading() {
+    this.portCallStore.clearErrors()
+    await this.portCallStore.initializePortCall()
   }
 }
 </script>
@@ -401,5 +388,29 @@ body {
   .app-main {
     padding: 1rem 0;
   }
+}
+
+/* Error Message */
+.error-message {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.error-content h3 {
+  color: #dc2626;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.error-content p {
+  color: #6b7280;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
 }
 </style>

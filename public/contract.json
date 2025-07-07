@@ -90,7 +90,7 @@
                         ]
                     }
                 },
-                "isOn": true,
+                "isOn": false,
                 "effect": {
                     "type": "event_range",
                     "operation": "add",

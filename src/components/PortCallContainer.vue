@@ -10,14 +10,14 @@
             <h3>Time Performance</h3>
           </div>
           <div class="card-content">
-                         <div class="primary-metric">
-               <span class="metric-value">{{ portCallNetTimeValue || '—' }}</span>
-               <span class="metric-label">Time Used</span>
-             </div>
-             <div class="secondary-metric">
-               <span class="metric-value">{{ timeAllowed || '—' }}</span>
-               <span class="metric-label">Time Allowed</span>
-             </div>
+            <div class="primary-metric">
+              <span class="metric-value">{{ portCallNetTimeValue || '—' }}</span>
+              <span class="metric-label">Time Used</span>
+            </div>
+            <div class="secondary-metric">
+              <span class="metric-value">{{ timeAllowed || '—' }}</span>
+              <span class="metric-label">Time Allowed</span>
+            </div>
             <div class="progress-section">
               <div class="progress-bar">
                 <div class="progress-fill" :style="{ width: timeProgressPercentage + '%' }"></div>
@@ -34,37 +34,37 @@
             <h3>Schedule</h3>
           </div>
           <div class="card-content">
-                         <div class="schedule-item">
-               <span class="schedule-label">Laycan</span>
-               <span class="schedule-value">{{ laycan || '—' }}</span>
-             </div>
-             <div class="schedule-item">
-               <span class="schedule-label">Contract</span>
-               <span class="schedule-value">{{ contractClauseLabel || '—' }}</span>
-             </div>
+            <div class="schedule-item">
+              <span class="schedule-label">Laycan</span>
+              <span class="schedule-value">{{ laycan || '—' }}</span>
+            </div>
+            <div class="schedule-item">
+              <span class="schedule-label">Contract</span>
+              <span class="schedule-value">{{ contractClauseLabel || '—' }}</span>
+            </div>
           </div>
         </div>
 
         <!-- Financial Impact Card -->
-        <div class="metric-card financial-impact" v-if="demurrageCalculation">
+        <div class="metric-card financial-impact" v-if="portCallStore.demurrageCalculation">
           <div class="card-header">
             <div class="card-icon">💰</div>
             <h3>Financial Impact</h3>
           </div>
           <div class="card-content">
             <div class="primary-metric">
-              <span class="metric-value financial" :class="{ 'negative': demurrageCalculation.demurrageAmount > 0 }">
-                ${{ formatCurrency(demurrageCalculation.demurrageAmount) }}
+              <span class="metric-value financial" :class="{ 'negative': portCallStore.demurrageCalculation.demurrageAmount > 0 }">
+                ${{ formatCurrency(portCallStore.demurrageCalculation.demurrageAmount) }}
               </span>
-              <span class="metric-label">{{ demurrageCalculation.demurrageAmount > 0 ? 'Demurrage' : 'Dispatch' }}</span>
+              <span class="metric-label">{{ portCallStore.demurrageCalculation.demurrageAmount > 0 ? 'Demurrage' : 'Dispatch' }}</span>
             </div>
             <div class="financial-breakdown">
               <div class="breakdown-item positive">
-                <span>+{{ formatDuration(demurrageCalculation.addedMinutes) }}</span>
+                <span>+{{ formatDuration(portCallStore.demurrageCalculation.addedMinutes) }}</span>
                 <small>Added Time</small>
               </div>
               <div class="breakdown-item negative">
-                <span>-{{ formatDuration(demurrageCalculation.deductedMinutes) }}</span>
+                <span>-{{ formatDuration(portCallStore.demurrageCalculation.deductedMinutes) }}</span>
                 <small>Deducted Time</small>
               </div>
             </div>
@@ -83,14 +83,14 @@
               <span class="status-text">{{ currentStatusText }}</span>
             </div>
             <div class="status-details">
-                             <div class="detail-item">
-                 <span class="detail-label">Operation</span>
-                 <span class="detail-value">{{ operationTypeLabel || '—' }}</span>
-               </div>
-               <div class="detail-item">
-                 <span class="detail-label">Rate</span>
-                 <span class="detail-value">{{ cargoHandlingRate || '—' }} {{ rateLabel }}</span>
-               </div>
+              <div class="detail-item">
+                <span class="detail-label">Operation</span>
+                <span class="detail-value">{{ operationTypeLabel || '—' }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Rate</span>
+                <span class="detail-value">{{ cargoHandlingRate || '—' }} {{ rateLabel }}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -104,15 +104,15 @@
         <div class="detail-panel">
           <cargo-details-panel
             v-if="shouldShowCalculator"
-            :port-call="dynamicPortCall" />
+            :port-call="portCallStore.portCall" />
         </div>
 
         <!-- Contract Clauses -->
         <div class="detail-panel">
           <contract-clauses-panel
-            v-if="shouldShowCalculator && contractResults"
-            :contract-results="contractResults"
-            :demurrage-calculation="demurrageCalculation" />
+            v-if="shouldShowCalculator && portCallStore.contractResults"
+            :contract-results="portCallStore.contractResults"
+            :demurrage-calculation="portCallStore.demurrageCalculation" />
         </div>
       </div>
     </section>
@@ -124,9 +124,9 @@
         <calculator
           v-if="shouldShowCalculator"
           data-testid="port-call-calculator"
-          :dynamic-port-call="dynamicPortCall"
+          :dynamic-port-call="portCallStore.portCall"
           :list-rows="listRows"
-          :selected-sof="selectedSof" />
+          :selected-sof="portCallStore.selectedSof" />
       </div>
     </section>
 
@@ -140,14 +140,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import moment from 'moment'
-import { PortCall, Terminal, Berth, Port, Sof, Cargo, ListRow } from '../types'
+import type { ListRow } from '../types'
 import Calculator from './Calculator.vue'
 import CargoDetailsPanel from './CargoDetailsPanel.vue'
 import ContractClausesPanel from './ContractClausesPanel.vue'
-import { applyContractClauses, calculateDemurrage, fetchSofData } from '../services/contract-service'
-import { mapEventLabelToCode } from '../utils/event-mapper'
+import { usePortCallStore } from '../stores/port-call-store'
 
 @Component({
   components: {
@@ -157,49 +156,90 @@ import { mapEventLabelToCode } from '../utils/event-mapper'
   }
 })
 export default class PortCallContainer extends Vue {
-  @Prop() readonly portCall!: PortCall | null
-  @Prop() readonly terminal!: Terminal | null
-  @Prop() readonly berth!: Berth | null
-  @Prop() readonly port!: Port | null
-  @Prop() readonly selectedSof!: Sof | null
-  @Prop({ default: () => [] }) readonly sofs!: Sof[]
-
-  dynamicPortCall: PortCall | null = null
+  portCallStore = usePortCallStore()
   listRows: ListRow[] = []
-  totalAddTime: number | null = null
-  totalDeductTime: number | null = null
-  contractResults: any = null
-  demurrageCalculation: any = null
 
-  @Watch('portCall', { immediate: true })
-  onPortCallChange(newPortCall: PortCall | null) {
-    if (newPortCall) {
-      this.dynamicPortCall = { ...newPortCall }
+  @Watch('portCallStore.portCall', { immediate: true })
+  onPortCallChange() {
+    if (this.portCallStore.portCall) {
       this.loadEventList()
-      this.applyContract()
     }
   }
 
   get shouldShowCalculator(): boolean {
-    return !!this.dynamicPortCall
+    return Boolean(this.portCallStore.portCall)
   }
 
   get timeProgressPercentage(): number {
-    if (!this.portCallInDaysInDecimal || !this.timeAllowedInDaysInDecimal) return 0
-    const percentage = (Math.abs(this.portCallInDaysInDecimal) / this.timeAllowedInDaysInDecimal) * 100
-    return Math.min(Math.round(percentage), 100)
+    return this.portCallStore.timeProgressPercentage
   }
 
   get currentStatusClass(): string {
-    if (!this.demurrageCalculation) return 'in-progress'
-    if (this.demurrageCalculation.demurrageAmount > 0) return 'demurrage'
-    return 'on-time'
+    return this.portCallStore.currentStatus
   }
 
   get currentStatusText(): string {
-    if (!this.demurrageCalculation) return 'In Progress'
-    if (this.demurrageCalculation.demurrageAmount > 0) return 'Demurrage Incurred'
+    if (!this.portCallStore.demurrageCalculation) return 'In Progress'
+    if (this.portCallStore.demurrageCalculation.demurrageAmount > 0) return 'Demurrage Incurred'
     return 'On Schedule'
+  }
+
+  get laycan(): string | null {
+    const portCallLaycan = this.portCallStore.portCall?.laycan
+    
+    if (!portCallLaycan?.startDate && !portCallLaycan?.endDate) {
+      return null
+    }
+
+    const startDate = portCallLaycan?.startDate
+      ? moment(portCallLaycan?.startDate).format('DD MMM')
+      : 'Date TBD'
+    const endDate = portCallLaycan?.endDate
+      ? moment(portCallLaycan?.endDate).format('DD MMM')
+      : 'Date TBD'
+    return `${startDate} to ${endDate}`
+  }
+
+  get timeAllowed(): string | null {
+    if (!this.portCallStore.timeAllowedInDays) {
+      return null
+    }
+
+    return this.toDuration(this.portCallStore.timeAllowedInDays)
+  }
+
+  get cargoHandlingRate(): number | undefined {
+    return this.portCallStore.portCall?.cargoHandlingRate
+  }
+
+  get contractClauseLabel(): string {
+    return 'ASBATANKVOY 2012 Contract'
+  }
+
+  get operationTypeLabel(): string {
+    const operationMap: { [key: string]: string } = {
+      'discharge': 'Discharge',
+      'load': 'Load'
+    }
+    return operationMap[this.portCallStore.portCall?.operation || ''] || ''
+  }
+
+  get rateTimeUnit(): string {
+    return this.portCallStore.portCall?.cargoHandlingTimeUnit || 'day'
+  }
+
+  get rateLabel(): string {
+    return this.rateTimeUnit === 'day' ? 'Rate/day' : 'Rate/hour'
+  }
+
+  get portCallNetTimeValue(): string {
+    if (!this.portCallStore.portCallInDaysInDecimal) return ''
+
+    const isNegative = this.portCallStore.portCall?.netTime ? this.portCallStore.portCall.netTime < 0 : false
+    const negativeSign = isNegative ? '-' : ''
+    const timeString = this.toDuration(this.portCallStore.portCallInDaysInDecimal)
+
+    return `${negativeSign}${timeString}`
   }
 
   formatCurrency(amount: number): string {
@@ -221,216 +261,6 @@ export default class PortCallContainer extends Vue {
     return result.trim()
   }
 
-  async applyContract() {
-    if (!this.dynamicPortCall) return
-    
-    try {
-      // Ensure we have events to work with
-        // Try to fetch SOF data first
-        console.log('No events found, trying to fetch SOF data')
-        const sofData = await fetchSofData()
-        
-        if (sofData && sofData.events) {
-          // Extract events from SOF data
-          const sofEvents = sofData.events.flatMap((eventGroup: any) => 
-            eventGroup.events.map((event: any) => ({
-              id: event.id,
-              key: event.event_code || event.event_key,
-              name: event.event_label,
-              date: event.timestamp,
-              type: event.type,
-              event_code: event.event_code,
-              sub_category_key: event.sub_category_key
-            }))
-          )
-          
-          if (sofEvents.length > 0) {
-            console.log('Using events from SOF data')
-            // Make sure each event has an event_code
-            const eventsWithCodes = sofEvents.map((event: ({name:string, key:string, event_code:string}) ) => {
-              if (!event.event_code) {
-                const code = mapEventLabelToCode(event.name);
-                return {
-                  ...event,
-                  event_code: code || event.key
-                };
-              }
-              return event;
-            });
-            this.dynamicPortCall.events = eventsWithCodes
-            await this.processContractWithEvents()
-            return
-          }
-        }
-        
-        // If no SOF data, fall back to mock events
-        console.log('No SOF data found, creating mock events')
-        const contractService = await import('../services/contract-service')
-        this.dynamicPortCall.events = contractService.createMockEvents()
-        await this.processContractWithEvents()
-    } catch (error) {
-      console.error('Error applying contract:', error)
-    }
-  }
-  
-  async processContractWithEvents() {
-    if (!this.dynamicPortCall?.events) return
-
-    
-    // Apply contract clauses to events
-    this.contractResults = await applyContractClauses(this.dynamicPortCall.events)
-    console.log("results from contract", this.contractResults);
-    
-    // Calculate demurrage if we have the necessary data
-    if (this.portCallInDaysInDecimal !== null && this.timeAllowedInDaysInDecimal !== null) {
-      this.demurrageCalculation = await calculateDemurrage(
-        this.dynamicPortCall.netTime || 0, // Time used in minutes
-        this.timeAllowedInDaysInDecimal * 24 * 60, // Time allowed in minutes
-        this.contractResults.add_events,
-        this.contractResults.deduct_events
-      )
-      
-      // Update total add/deduct time
-      this.totalAddTime = this.demurrageCalculation.addedMinutes / 1440 // Convert to days
-      this.totalDeductTime = this.demurrageCalculation.deductedMinutes / 1440 // Convert to days
-    }
-  }
-
-  get laycan(): string | null {
-    const portCallLaycan = this.dynamicPortCall?.laycan
-    
-    if (!portCallLaycan?.startDate && !portCallLaycan?.endDate) {
-      return null
-    }
-
-    const startDate = portCallLaycan?.startDate
-      ? moment(portCallLaycan?.startDate).format('DD MMM')
-      : 'Date TBD'
-    const endDate = portCallLaycan?.endDate
-      ? moment(portCallLaycan?.endDate).format('DD MMM')
-      : 'Date TBD'
-    return `${startDate} to ${endDate}`
-  }
-
-  get timeAllowedInDaysInDecimal(): number | null {
-    if (!this.dynamicPortCall) {
-      return null
-    }
-
-    const allowedDuration = this.dynamicPortCall?.timeAllowedDuration
-    const allowedDurationDays = allowedDuration
-      ? this.getTotal(allowedDuration) : this.dynamicPortCall?.timeAllowed
-
-    return allowedDurationDays || null
-  }
-
-  get timeAllowed(): string | null {
-    if (!this.timeAllowedInDaysInDecimal) {
-      return null
-    }
-
-    const humanFriendlyTime = this.toDuration(this.timeAllowedInDaysInDecimal)
-    return humanFriendlyTime
-  }
-
-  get timeAllowedTooltip(): string {
-    if (!this.timeAllowed) {
-      return ''
-    }
-
-    const tooltip = this.getFormattedTimeTooltip(this.timeAllowedInDaysInDecimal)
-    return tooltip
-  }
-
-  get operation(): string | undefined {
-    return this.dynamicPortCall?.operation
-  }
-
-  get cargoHandlingRate(): number | undefined {
-    return this.dynamicPortCall?.cargoHandlingRate
-  }
-
-  get laycanTooltip(): string {
-    return this.laycan || ''
-  }
-
-  get contractClauseTooltip(): string {
-    return this.contractClauseLabel || ''
-  }
-
-  get cargoesInOperationTooltip(): string {
-    return this.formattedCargoesInOperation || ''
-  }
-
-  get cargoHandlingRateTooltip(): string {
-    return this.cargoHandlingRate?.toString() || ''
-  }
-
-  get formattedCargoesInOperation(): string | null {
-    if (!this.portCallCargoes?.length) return null
-    const cargoNames = this.portCallCargoes.map(({ name }) => name)
-    return [...new Set(cargoNames)].join(', ')
-  }
-
-  get contractClauseLabel(): string {
-    return 'ASBATANKVOY 2012 Contract'
-  }
-
-  get operationTypeLabel(): string {
-    const operationMap: { [key: string]: string } = {
-      'discharge': 'Discharge',
-      'load': 'Load'
-    }
-    return operationMap[this.dynamicPortCall?.operation || ''] || ''
-  }
-
-  get portCallCargoes(): Cargo[] | undefined {
-    return this.dynamicPortCall?.cargoes
-  }
-
-  get rateTimeUnit(): string {
-    return this.dynamicPortCall?.cargoHandlingTimeUnit || 'day'
-  }
-
-  get rateLabel(): string {
-    return this.rateTimeUnit === 'day' ? 'Rate/day' : 'Rate/hour'
-  }
-
-  get portCallInDaysInDecimal(): number | null {
-    return this.dynamicPortCall?.netTime ? this.dynamicPortCall?.netTime / 1440 : null
-  }
-
-  get portCallNetTime(): string | null {
-    if (!this.portCallInDaysInDecimal) {
-      return null
-    }
-
-    const humanFriendlyTime = this.toDuration(this.portCallInDaysInDecimal)
-    return humanFriendlyTime
-  }
-
-  get portCallNetTimeValue(): string {
-    if (!this.portCallNetTime) return ''
-
-    const isNegative = this.dynamicPortCall?.netTime ? this.dynamicPortCall.netTime < 0 : false
-    const negativeSign = isNegative ? '-' : ''
-
-    return `${negativeSign}${this.portCallNetTime}`
-  }
-
-  get portCallNetTimeTooltip(): string {
-    if (!this.portCallNetTime) {
-      return ''
-    }
-
-    const tooltip = this.getFormattedTimeTooltip(this.portCallInDaysInDecimal)
-    return tooltip
-  }
-
-  getTotal(duration: { days: number, hours: number, minutes: number }): number {
-    return duration.days + (duration.hours / 24) + (duration.minutes / 1440)
-  }
-
   toDuration(days: number | null): string | null {
     if (!days) return null
     
@@ -447,26 +277,10 @@ export default class PortCallContainer extends Vue {
     return result.trim()
   }
 
-  getFormattedTimeTooltip(days: number | null): string {
-    if (!days) return ''
-    
-    const totalMinutes = Math.abs(days * 1440)
-    const d = Math.floor(totalMinutes / 1440)
-    const h = Math.floor((totalMinutes % 1440) / 60)
-    const m = Math.floor(totalMinutes % 60)
-    
-    let parts = []
-    if (d > 0) parts.push(`${d} day${d !== 1 ? 's' : ''}`)
-    if (h > 0) parts.push(`${h} hour${h !== 1 ? 's' : ''}`)
-    if (m > 0) parts.push(`${m} minute${m !== 1 ? 's' : ''}`)
-    
-    return parts.join(', ')
-  }
-
   loadEventList(): void {
-    if (!this.dynamicPortCall?.events) return
+    if (!this.portCallStore.portCall?.events) return
     
-    const events = this.dynamicPortCall.events.map(event => ({
+    const events = this.portCallStore.portCall.events.map(event => ({
       ...event,
       rowType: 'event',
     }))
@@ -477,25 +291,25 @@ export default class PortCallContainer extends Vue {
     )
     
     // Group events by date
-    const eventsByDate: { [key: string]: any[] } = {}
-    sortedEvents.forEach(event => {
+    const eventsByDate: { [key: string]: typeof events } = {}
+    for (const event of sortedEvents) {
       const date = moment(event.date).format('YYYY-MM-DD')
       if (!eventsByDate[date]) {
         eventsByDate[date] = []
       }
       eventsByDate[date].push(event)
-    })
+    }
     
     // Create list rows with date headers
     const listRows: ListRow[] = []
-    Object.entries(eventsByDate).forEach(([date, dateEvents]) => {
+    for (const [date, dateEvents] of Object.entries(eventsByDate)) {
       listRows.push({
         id: `date_header_${date}`,
         rowType: 'dateHeader',
         date: new Date(date),
       })
       listRows.push(...dateEvents)
-    })
+    }
     
     this.listRows = listRows
   }
