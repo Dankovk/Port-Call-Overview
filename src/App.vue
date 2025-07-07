@@ -8,17 +8,17 @@
             <div class="logo-icon">⚓</div>
             <h1 class="app-title">Port Call Overview</h1>
           </div>
-        
+
         </div>
-        
+
       </div>
     </header>
 
     <!-- Main Content -->
     <main class="app-main">
       <div class="container">
-        <port-call-container 
-          :port-call="portCall" 
+        <port-call-container
+          :port-call="portCall"
           :terminal="terminal"
           :berth="berth"
           :port="port"
@@ -63,10 +63,10 @@ export default class App extends Vue {
       // Load SOF data
       const sofResponse = await fetch('sof.json')
       const sofData = await sofResponse.json()
-      
+
       // Create port call data from SOF
       const portCallData = createPortCallFromSof(sofData)
-      
+
       this.portCall = portCallData.portCall
       this.terminal = portCallData.terminal
       this.berth = portCallData.berth
@@ -77,7 +77,7 @@ export default class App extends Vue {
         isMain: true
       }
       this.sofs = [this.selectedSof]
-      
+
     } catch (error) {
       console.error('Error loading SOF data:', error)
     } finally {
@@ -387,17 +387,17 @@ body {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .header-left {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
   }
-  
+
   .container {
     padding: 0 1rem;
   }
-  
+
   .app-main {
     padding: 1rem 0;
   }
