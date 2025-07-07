@@ -34,7 +34,7 @@
         <!-- Rate Card -->
         <div class="detail-card">
           <div class="card-header">
-            <div class="card-icon rate-icon">⚡</div>
+            <!-- <div class="card-icon rate-icon">⚡</div> -->
             <div class="card-title">
               <h4>{{ rateLabel }}</h4>
               <span class="card-subtitle">Handling rate</span>
@@ -72,22 +72,20 @@
         </div>
       </div>
 
-      <!-- Additional Information -->
-      <div class="additional-info">
-        <div class="info-section">
-          <h4 class="section-title">
-            <span class="section-icon">📊</span>
-            Performance Metrics
-          </h4>
-          <div class="metrics-grid">
-            <div class="metric-item">
-              <span class="metric-label">Estimated Duration</span>
-              <span class="metric-value">{{ estimatedDuration }}</span>
-            </div>
-            <div class="metric-item">
-              <span class="metric-label">Efficiency</span>
-              <span class="metric-value">{{ efficiency }}%</span>
-            </div>
+      <!-- Cargo Summary -->
+      <div class="performance-section">
+        <h4 class="section-title">
+          <span class="section-icon">📋</span>
+          Cargo Summary
+        </h4>
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <span class="metric-label">Total Quantity</span>
+            <span class="metric-value">{{ totalCargoQuantity }}</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Estimated Duration</span>
+            <span class="metric-value">{{ estimatedDuration }}</span>
           </div>
         </div>
       </div>
@@ -124,16 +122,34 @@ export default class CargoDetailsPanel extends Vue {
   }
 
   get operationStatus(): string {
-    // This could be enhanced with actual status logic
-    return 'Active'
+    // Determine status based on actual events if available
+    const events = this.portCall?.events || []
+    const hasLoadComplete = events.some(e => e.key === 'load_completed' || e.key === 'load_complete')
+    const hasDischargeComplete = events.some(e => e.key === 'discharge_completed' || e.key === 'discharge_complete')
+    const hasLoadCommence = events.some(e => e.key === 'load_commenced' || e.key === 'load_commence')
+    const hasDischargeCommence = events.some(e => e.key === 'discharge_commenced' || e.key === 'discharge_commence')
+    
+    if (hasLoadComplete || hasDischargeComplete) return 'Complete'
+    if (hasLoadCommence || hasDischargeCommence) return 'In Progress'
+    return 'Pending'
   }
 
   get operationStatusClass(): string {
-    return 'active'
+    const status = this.operationStatus.toLowerCase()
+    return status.replace(' ', '-')
   }
 
   get portCallCargoes(): Cargo[] | undefined {
     return this.portCall?.cargoes
+  }
+
+  get totalCargoQuantity(): string {
+    if (!this.portCallCargoes?.length) return '—'
+    
+    const total = this.portCallCargoes.reduce((sum, cargo) => sum + (cargo.quantity || 0), 0)
+    const unit = this.portCallCargoes[0]?.unit || 'MT'
+    
+    return total > 0 ? `${new Intl.NumberFormat('en-US').format(total)} ${unit}` : '—'
   }
 
   get cargoCount(): number {
@@ -184,11 +200,6 @@ export default class CargoDetailsPanel extends Vue {
     }
   }
 
-  get efficiency(): number {
-    // Mock efficiency calculation
-    return Math.round(85 + Math.random() * 10)
-  }
-
   formatHandlingRate(rate: number | undefined): string {
     if (!rate) return '—'
     return new Intl.NumberFormat('en-US', { 
@@ -201,10 +212,9 @@ export default class CargoDetailsPanel extends Vue {
 <style scoped>
 .cargo-details-panel {
   background: white;
-  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  
+  
 }
 
 /* Panel Header */
@@ -257,7 +267,7 @@ export default class CargoDetailsPanel extends Vue {
 /* Detail Cards */
 .detail-card {
   background: #f8fafc;
-  border-radius: 12px;
+  
   padding: 1.5rem;
   border: 1px solid #e2e8f0;
   transition: all 0.2s ease;
@@ -265,21 +275,9 @@ export default class CargoDetailsPanel extends Vue {
   overflow: hidden;
 }
 
-.detail-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  border-color: #cbd5e1;
-}
 
-.detail-card:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(45deg, #667eea, #764ba2);
-}
+
+
 
 .card-header {
   display: flex;
@@ -380,12 +378,11 @@ export default class CargoDetailsPanel extends Vue {
   color: #059669;
 }
 
-/* Additional Information */
-.additional-info {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 1.5rem;
-  border: 1px solid #e2e8f0;
+/* Performance Section */
+.performance-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
 }
 
 .section-title {
@@ -414,8 +411,7 @@ export default class CargoDetailsPanel extends Vue {
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 1rem;
-  background: white;
-  border-radius: 8px;
+  background: #f8fafc;
   border: 1px solid #e2e8f0;
 }
 

@@ -15,7 +15,7 @@
       <div class="timeline-line"></div>
       
       <div 
-        v-for="(row, index) in listRows" 
+        v-for="row in listRows" 
         :key="row.id" 
         class="timeline-item"
         :class="getTimelineItemClass(row)"
@@ -24,10 +24,10 @@
         <div v-if="row.rowType === 'dateHeader'" class="date-header">
           <div class="date-marker">
             <div class="date-circle"></div>
-            <div class="date-content">
-              <h4 class="date-title">{{ formatDateHeader(row.date) }}</h4>
-              <span class="date-subtitle">{{ getDayOfWeek(row.date) }}</span>
-            </div>
+          </div>
+          <div class="date-content">
+            <h4 class="date-title">{{ formatDateHeader(row.date) }}</h4>
+            <span class="date-subtitle">{{ getDayOfWeek(row.date) }}</span>
           </div>
         </div>
 
@@ -35,24 +35,23 @@
         <div v-else-if="row.rowType === 'event'" class="event-item">
           <div class="event-marker">
             <div class="event-dot" :class="getEventTypeClass(row)"></div>
-            <div class="event-connector" v-if="index < listRows.length - 1"></div>
           </div>
           
           <div class="event-content">
-            <div class="event-time">
-              {{ formatTime(row.date) }}
-            </div>
-            
-            <div class="event-details">
-              <h5 class="event-name">{{ row.name }}</h5>
-              <div class="event-meta">
-                <span v-if="getEventCode(row)" class="event-code">{{ getEventCode(row) }}</span>
-                <span class="event-type">{{ getEventTypeLabel(getEventType(row)) }}</span>
+            <div class="event-main">
+              <div class="event-time">
+                {{ formatTime(row.date) }}
               </div>
-            </div>
-            
-            <div class="event-status" :class="getEventStatusClass(row)">
-              <span class="status-indicator"></span>
+              
+              <div class="event-details">
+                <h5 class="event-name">{{ row.name }}</h5>
+                <div class="event-meta">
+                  <span v-if="getEventCode(row)" class="event-code">{{ getEventCode(row) }}</span>
+                  <span class="event-type-badge" :class="getEventTypeClass(row)">
+                    {{ getEventTypeLabel(getEventType(row)) }}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -199,7 +198,6 @@ export default class Calculator extends Vue {
 .timeline-calculator {
   padding: 2rem;
   background: white;
-  border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
@@ -252,12 +250,12 @@ export default class Calculator extends Vue {
 /* Timeline Container */
 .timeline-container {
   position: relative;
-  padding-left: 2rem;
+  margin-left: 1rem;
 }
 
 .timeline-line {
   position: absolute;
-  left: 1rem;
+  left: 0;
   top: 0;
   bottom: 0;
   width: 2px;
@@ -277,26 +275,25 @@ export default class Calculator extends Vue {
 
 /* Date Headers */
 .date-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   margin: 2rem 0 1rem 0;
 }
 
 .date-marker {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
   position: relative;
-  left: -2rem;
+  z-index: 10;
 }
 
 .date-circle {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   background: linear-gradient(45deg, #667eea, #764ba2);
   border-radius: 50%;
-  border: 3px solid white;
+  border: 4px solid white;
   box-shadow: 0 0 0 2px #e2e8f0;
-  z-index: 10;
-  position: relative;
+  margin-left: -9px;
 }
 
 .date-content {
@@ -322,27 +319,25 @@ export default class Calculator extends Vue {
 /* Event Items */
 .event-item {
   display: flex;
-  align-items: flex-start;
-  gap: 1rem;
+  align-items: center;
+  gap: 0;
   position: relative;
 }
 
 .event-marker {
   position: relative;
-  left: -2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   z-index: 5;
+  flex-shrink: 0;
 }
 
 .event-dot {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 3px solid white;
   box-shadow: 0 0 0 2px currentColor;
   background: currentColor;
+  margin-left: -7px;
 }
 
 .event-dot.operational {
@@ -361,31 +356,22 @@ export default class Calculator extends Vue {
   color: #8b5cf6;
 }
 
-.event-connector {
-  width: 1px;
-  height: 1.5rem;
-  background: #e2e8f0;
-  margin-top: 0.25rem;
-}
-
 .event-content {
   flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  margin-left: 1rem;
   background: white;
-  padding: 1rem 1.5rem;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
-  min-height: 60px;
+  overflow: hidden;
 }
 
-.event-content:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-1px);
+.event-main {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
 }
 
 .event-time {
@@ -398,17 +384,19 @@ export default class Calculator extends Vue {
   border-radius: 6px;
   min-width: 60px;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .event-details {
   flex: 1;
+  min-width: 0;
 }
 
 .event-name {
   font-size: 1rem;
   font-weight: 600;
   color: #1e293b;
-  margin: 0 0 0.25rem 0;
+  margin: 0 0 0.5rem 0;
   line-height: 1.4;
 }
 
@@ -416,6 +404,7 @@ export default class Calculator extends Vue {
   display: flex;
   gap: 0.75rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .event-code {
@@ -428,35 +417,33 @@ export default class Calculator extends Vue {
   font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
 }
 
-.event-type {
+.event-type-badge {
   font-size: 0.75rem;
-  color: #64748b;
-  font-weight: 500;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
 }
 
-.event-status {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+.event-type-badge.operational {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
 }
 
-.status-indicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #10b981;
+.event-type-badge.commercial {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
 }
 
-.event-status.completed .status-indicator {
-  background: #10b981;
+.event-type-badge.weather {
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
 }
 
-.event-status.pending .status-indicator {
-  background: #f59e0b;
-}
-
-.event-status.cancelled .status-indicator {
-  background: #ef4444;
+.event-type-badge.administrative {
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
 }
 
 /* Timeline Footer */
@@ -532,7 +519,7 @@ export default class Calculator extends Vue {
     gap: 0.5rem;
   }
   
-  .event-content {
+  .event-main {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
@@ -546,6 +533,22 @@ export default class Calculator extends Vue {
   
   .legend-items {
     gap: 1rem;
+  }
+  
+  .timeline-container {
+    margin-left: 0.5rem;
+  }
+  
+  .date-circle {
+    width: 16px;
+    height: 16px;
+    margin-left: -7px;
+  }
+  
+  .event-dot {
+    width: 12px;
+    height: 12px;
+    margin-left: -5px;
   }
 }
 </style>

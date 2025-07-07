@@ -2,7 +2,6 @@
   <div class="port-call-dashboard">
     <!-- Overview Cards Section -->
     <section class="overview-section">
-      <h2 class="section-title">Port Call Overview</h2>
       <div class="overview-grid">
         <!-- Time Performance Card -->
         <div class="metric-card time-performance">
@@ -542,28 +541,12 @@ export default class PortCallContainer extends Vue {
 /* Metric Cards */
 .metric-card {
   background: white;
-  border-radius: 16px;
   padding: 1.5rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-}
-
-.metric-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-}
-
-.metric-card:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(45deg, #667eea, #764ba2);
 }
 
 .card-header {
@@ -794,7 +777,6 @@ export default class PortCallContainer extends Vue {
 
 .detail-panel {
   background: white;
-  border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
@@ -806,7 +788,6 @@ export default class PortCallContainer extends Vue {
 
 .timeline-container {
   background: white;
-  border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
@@ -816,7 +797,6 @@ export default class PortCallContainer extends Vue {
   text-align: center;
   padding: 4rem 2rem;
   background: white;
-  border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 

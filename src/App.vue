@@ -6,20 +6,11 @@
         <div class="header-left">
           <div class="logo">
             <div class="logo-icon">⚓</div>
-            <h1 class="app-title">Port Call Manager</h1>
+            <h1 class="app-title">Port Call Overview</h1>
           </div>
-          <div class="breadcrumb">
-            <span class="breadcrumb-item">Dashboard</span>
-            <span class="breadcrumb-separator">›</span>
-            <span class="breadcrumb-item active">Port Call Viewer</span>
-          </div>
+        
         </div>
-        <div class="header-right">
-          <div class="status-indicator">
-            <div class="status-dot active"></div>
-            <span>Live Data</span>
-          </div>
-        </div>
+        
       </div>
     </header>
 

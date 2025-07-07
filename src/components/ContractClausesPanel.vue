@@ -289,7 +289,6 @@ export default class ContractClausesPanel extends Vue {
 <style scoped>
 .contract-clauses-panel {
   background: white;
-  border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -354,11 +353,6 @@ export default class ContractClausesPanel extends Vue {
   transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
-}
-
-.summary-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .summary-card:before {
@@ -566,11 +560,6 @@ export default class ContractClausesPanel extends Vue {
   padding: 1rem;
   border: 1px solid #e2e8f0;
   transition: all 0.2s ease;
-}
-
-.clause-item:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .add-item {
